@@ -2,6 +2,8 @@
 
 namespace Matthias\LeanpubApi\Dto;
 
+use Assert\Assertion;
+
 class PackageDiscount
 {
     private $packageSlug;
@@ -15,11 +17,15 @@ class PackageDiscount
 
     private function setPackageSlug($packageSlug)
     {
+        Assertion::notEmpty($packageSlug, 'Package slug should not be empty');
+
         $this->packageSlug = $packageSlug;
     }
 
     private function setDiscountedPrice($discountedPrice)
     {
+        Assertion::numeric($discountedPrice, 'Discounted price should be numeric');
+
         $this->discountedPrice = (float) $discountedPrice;
     }
 

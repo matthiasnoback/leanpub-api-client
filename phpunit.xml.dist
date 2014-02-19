@@ -5,6 +5,12 @@
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <!-- Add your Leanpub API key here in order to run the functional tests -->
+        <!--<env name="LEANPUB_API_KEY" value="..." />-->
+        <!-- Add one of your book's slug that should be used for the function tests -->
+        <!--<env name="LEANPUB_BOOK_SLUG" value="..." />-->
+    </php>
     <filter>
         <whitelist>
             <directory>./</directory>

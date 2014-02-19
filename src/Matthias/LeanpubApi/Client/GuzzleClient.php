@@ -2,6 +2,7 @@
 
 namespace Matthias\LeanpubApi\Client;
 
+use Assert\Assertion;
 use Guzzle\Http\ClientInterface as GuzzleClientInterface;
 use Guzzle\Http\Exception\RequestException;
 use Matthias\LeanpubApi\Call\ApiCallInterface;
@@ -9,13 +10,17 @@ use Matthias\LeanpubApi\Client\Exception\RequestFailedException;
 
 class GuzzleClient implements ClientInterface
 {
+    /**
+     * @var GuzzleClientInterface
+     */
     private $guzzleClient;
+
     private $apiKey;
 
     public function __construct(GuzzleClientInterface $guzzleClient, $apiKey)
     {
-        $this->guzzleClient = $guzzleClient;
-        $this->apiKey = $apiKey;
+        $this->setGuzzleClient($guzzleClient);
+        $this->setApiKey($apiKey);
     }
 
     public function callApi(ApiCallInterface $apiCall)
@@ -49,5 +54,17 @@ class GuzzleClient implements ClientInterface
         $query->set('api_key', $this->apiKey);
 
         return $request;
+    }
+
+    private function setGuzzleClient(GuzzleClientInterface $guzzleClient)
+    {
+        $guzzleClient->setBaseUrl('https://leanpub.com');
+        $this->guzzleClient = $guzzleClient;
+    }
+
+    private function setApiKey($apiKey)
+    {
+        Assertion::notEmpty($apiKey, 'API key should not be empty');
+        $this->apiKey = $apiKey;
     }
 }

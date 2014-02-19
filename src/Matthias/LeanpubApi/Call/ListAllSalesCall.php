@@ -3,14 +3,16 @@
 namespace Matthias\LeanpubApi\Call;
 
 use Assert\Assertion;
-use Matthias\LeanpubApi\Serializer\IndividualPurchasesDeserializer;
+use Matthias\LeanpubApi\Serializer\DtoDeserializerInterface;
 
 class ListAllSalesCall extends AbstractCall
 {
     private $page;
+    private $deserializer;
 
-    public function __construct($bookSlug, $page = 1, $format = 'json')
+    public function __construct(DtoDeserializerInterface $deserializer, $bookSlug, $page, $format)
     {
+        $this->deserializer = $deserializer;
         $this->setBookSlug($bookSlug);
         $this->setPage($page);
         $this->setFormat($format);
@@ -43,8 +45,6 @@ class ListAllSalesCall extends AbstractCall
 
     public function createResponseDto($responseBody)
     {
-        $deserializer = new IndividualPurchasesDeserializer();
-
-        return $deserializer->deserialize($responseBody, $this->format);
+        return $this->deserializer->deserialize($responseBody, $this->format);
     }
 }

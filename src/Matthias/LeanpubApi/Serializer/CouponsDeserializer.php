@@ -7,7 +7,7 @@ use Matthias\LeanpubApi\Dto\Coupon;
 use Matthias\LeanpubApi\Dto\CouponCollection;
 use Matthias\LeanpubApi\Dto\PackageDiscount;
 
-class CouponsDeserializer
+class CouponsDeserializer implements DtoDeserializerInterface
 {
     public function deserialize($rawData, $format)
     {
@@ -29,7 +29,7 @@ class CouponsDeserializer
         $coupon = new Coupon();
 
         $coupon->setCouponCode($couponArray['coupon_code']);
-        $coupon->setCreatedAt(CouponDate::toDateTime($couponArray['created_at']));
+        $coupon->setCreatedAt(JsonDate::toDateTime($couponArray['created_at']));
 
         foreach ($couponArray['package_discounts'] as $packageDiscountArray) {
             $coupon->addPackageDiscount($this->createPackageDiscountFromArray($packageDiscountArray));
@@ -41,8 +41,8 @@ class CouponsDeserializer
         $coupon->setNumUses($couponArray['num_uses']);
         $coupon->setStartDate(CouponDate::toDateTime($couponArray['start_date']));
         $coupon->setSuspended($couponArray['suspended']);
-        $coupon->setUpdatedAt(CouponDate::toDateTime($couponArray['updated_at']));
-        $coupon->setBookSlug($couponArray['book_slug']);
+        $coupon->setUpdatedAt(JsonDate::toDateTime($couponArray['updated_at']));
+        $coupon->setBookId($couponArray['book_id']);
 
         return $coupon;
     }

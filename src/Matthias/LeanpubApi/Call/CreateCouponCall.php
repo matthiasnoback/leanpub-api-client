@@ -4,15 +4,25 @@ namespace Matthias\LeanpubApi\Call;
 
 use Matthias\LeanpubApi\Client\Exception\RequestFailedException;
 use Matthias\LeanpubApi\Dto\CreateCoupon;
-use Matthias\LeanpubApi\Serializer\CreateCouponDtoSerializer;
+use Matthias\LeanpubApi\Serializer\DtoSerializerInterface;
+use Matthias\LeanpubApi\Validator\DtoValidatorInterface;
 
 class CreateCouponCall extends AbstractCall
 {
+    private $validator;
+    private $serializer;
     private $coupon;
+    protected $bookSlug;
 
-    public function __construct($bookSlug, CreateCoupon $coupon)
-    {
-        $this->setBookSlug($bookSlug);
+    public function __construct(
+        DtoValidatorInterface $validator,
+        DtoSerializerInterface $serializer,
+        $bookSlug,
+        CreateCoupon $coupon
+    ) {
+        $this->validator = $validator;
+        $this->serializer = $serializer;
+        $this->bookSlug = $bookSlug;
         $this->coupon = $coupon;
     }
 
@@ -33,9 +43,9 @@ class CreateCouponCall extends AbstractCall
 
     public function getBody()
     {
-        $serializer = new CreateCouponDtoSerializer();
+        $this->validator->validate($this->coupon);
 
-        return $serializer->serialize($this->coupon);
+        return $this->serializer->serialize($this->coupon, $this->format);
     }
 
     public function createResponseDto($responseBody)

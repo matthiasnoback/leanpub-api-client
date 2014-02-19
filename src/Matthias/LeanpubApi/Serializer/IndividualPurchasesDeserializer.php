@@ -6,7 +6,7 @@ use Assert\Assertion;
 use Matthias\LeanpubApi\Dto\IndividualPurchases;
 use Matthias\LeanpubApi\Dto\Purchase;
 
-class IndividualPurchasesDeserializer
+class IndividualPurchasesDeserializer implements DtoDeserializerInterface
 {
     public function deserialize($rawData, $format)
     {

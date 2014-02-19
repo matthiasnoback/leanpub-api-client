@@ -57,21 +57,21 @@ class Coupon
     /**
      * @var string
      */
-    private $bookSlug;
+    private $bookId;
 
     public function addPackageDiscount(PackageDiscount $packageDiscount)
     {
         $this->packageDiscounts[] = $packageDiscount;
     }
 
-    public function setBookSlug($bookSlug)
+    public function setBookId($bookId)
     {
-        $this->bookSlug = $bookSlug;
+        $this->bookId = $bookId;
     }
 
-    public function getBookSlug()
+    public function getBookId()
     {
-        return $this->bookSlug;
+        return $this->bookId;
     }
 
     public function setCouponCode($couponCode)

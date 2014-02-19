@@ -2,7 +2,9 @@
 
 namespace Matthias\LeanpubApi\Dto;
 
-class CreateCoupon
+use Assert\Assertion;
+
+class CreateCoupon implements DtoInterface
 {
     /**
      * @var string
@@ -39,19 +41,16 @@ class CreateCoupon
      */
     private $packageDiscounts = array();
 
-    public function __construct($couponCode = null, \DateTime $startDate = null)
+    public function __construct($couponCode, \DateTime $startDate)
     {
         $this->setCouponCode($couponCode);
-
-        if ($startDate === null) {
-            $startDate = new \DateTime();
-        }
-
         $this->setStartDate($startDate);
     }
 
     public function setCouponCode($couponCode)
     {
+        Assertion::notEmpty($couponCode, 'Coupon code can not be empty');
+
         $this->couponCode = $couponCode;
     }
 
@@ -72,11 +71,15 @@ class CreateCoupon
 
     public function setNote($note)
     {
+        Assertion::nullOrString($note, 'Note should be null or a string', null);
+
         $this->note = (string) $note;
     }
 
     public function setSuspended($suspended)
     {
+        Assertion::boolean($suspended);
+
         $this->suspended = (boolean) $suspended;
     }
 
@@ -118,22 +121,5 @@ class CreateCoupon
     public function getPackageDiscounts()
     {
         return $this->packageDiscounts;
-    }
-
-    public function __clone()
-    {
-        if ($this->startDate instanceof \DateTime) {
-            $this->startDate = clone $this->startDate;
-        }
-
-        if ($this->endDate instanceof \DateTime) {
-            $this->endDate = clone $this->endDate;
-        }
-
-        $clonedPackageDiscounts = array();
-        foreach ($this->packageDiscounts as $key => $packageDiscount) {
-            $clonedPackageDiscounts[$key] = clone $packageDiscount;
-        }
-        $this->packageDiscounts = $clonedPackageDiscounts;
     }
 }
