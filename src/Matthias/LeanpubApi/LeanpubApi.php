@@ -5,7 +5,7 @@ namespace Matthias\LeanpubApi;
 use Matthias\LeanpubApi\Call\CreateCouponCallFactory;
 use Matthias\LeanpubApi\Call\ListAllSalesCallFactory;
 use Matthias\LeanpubApi\Client\ClientInterface;
-use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\Coupons;
 use Matthias\LeanpubApi\Dto\CreateCoupon;
 use Matthias\LeanpubApi\Dto\IndividualPurchases;
 use Matthias\LeanpubApi\Dto\Purchase;
@@ -31,7 +31,7 @@ class LeanpubApi
     }
 
     /**
-     * @return CouponCollection
+     * @return Coupons
      */
     public function listCoupons($bookSlug)
     {
@@ -49,7 +49,7 @@ class LeanpubApi
     /**
      * @return Purchase[]
      */
-    public function getAllIndividualPurchases($bookSlug)
+    public function listAllIndividualPurchases($bookSlug)
     {
         return new \RecursiveIteratorIterator(new IndividualPurchasesIterator($this->client, $this->listAllSalesCallFactory, $bookSlug));
     }

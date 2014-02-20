@@ -4,7 +4,7 @@ namespace Matthias\LeanpubApi\Tests;
 
 use Guzzle\Http\Client;
 use Matthias\LeanpubApi\Client\GuzzleClient;
-use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\Coupons;
 use Matthias\LeanpubApi\Dto\CreateCoupon;
 use Matthias\LeanpubApi\Dto\IndividualPurchases;
 use Matthias\LeanpubApi\Dto\PackageDiscount;
@@ -38,9 +38,9 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fetches_coupon_codes()
     {
-        $couponCollection = $this->leanpubApi->listCoupons($this->bookSlug);
+        $coupons = $this->leanpubApi->listCoupons($this->bookSlug);
 
-        $this->assertTrue($couponCollection instanceof CouponCollection);
+        $this->assertTrue($coupons instanceof Coupons);
     }
 
     /**
@@ -61,7 +61,7 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
         $loopCount = 0;
         $maxLoopCount = 100;
 
-        foreach ($this->leanpubApi->getAllIndividualPurchases($this->bookSlug) as $purchase) {
+        foreach ($this->leanpubApi->listAllIndividualPurchases($this->bookSlug) as $purchase) {
             if ($loopCount > $maxLoopCount) {
                 break;
             }

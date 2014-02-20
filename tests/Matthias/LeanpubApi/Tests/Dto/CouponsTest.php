@@ -3,18 +3,18 @@
 namespace Matthias\LeanpubApi\Tests\Dto;
 
 use Matthias\LeanpubApi\Dto\Coupon;
-use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\Coupons;
 
-class CouponCollectionTest extends \PHPUnit_Framework_TestCase
+class CouponsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var CouponCollection
+     * @var Coupons
      */
-    private $couponCollection;
+    private $coupons;
 
     protected function setUp()
     {
-        $this->couponCollection = new CouponCollection();
+        $this->coupons = new Coupons();
     }
 
     /**
@@ -25,10 +25,10 @@ class CouponCollectionTest extends \PHPUnit_Framework_TestCase
         $coupon = new Coupon();
         $coupon->setCouponCode('coupon-code');
 
-        $this->couponCollection->addCoupon($coupon);
+        $this->coupons->addCoupon($coupon);
 
-        $this->assertTrue($this->couponCollection->exists('coupon-code'));
-        $this->assertFalse($this->couponCollection->exists('non-existing-coupon-code'));
+        $this->assertTrue($this->coupons->exists('coupon-code'));
+        $this->assertFalse($this->coupons->exists('non-existing-coupon-code'));
     }
 
     /**
@@ -38,13 +38,13 @@ class CouponCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $coupon1 = new Coupon();
         $coupon1->setCouponCode('coupon-code-1');
-        $this->couponCollection->addCoupon($coupon1);
+        $this->coupons->addCoupon($coupon1);
 
         $coupon2 = new Coupon();
         $coupon2->setCouponCode('coupon-code-2');
-        $this->couponCollection->addCoupon($coupon2);
+        $this->coupons->addCoupon($coupon2);
 
-        $this->assertCount(2, $this->couponCollection);
+        $this->assertCount(2, $this->coupons);
     }
 
     /**
@@ -54,15 +54,15 @@ class CouponCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $coupon1 = new Coupon();
         $coupon1->setCouponCode('coupon-code-1');
-        $this->couponCollection->addCoupon($coupon1);
+        $this->coupons->addCoupon($coupon1);
 
         $coupon2 = new Coupon();
         $coupon2->setCouponCode('coupon-code-2');
-        $this->couponCollection->addCoupon($coupon2);
+        $this->coupons->addCoupon($coupon2);
 
         $this->assertSame(
             array('coupon-code-1' => $coupon1, 'coupon-code-2' => $coupon2),
-            iterator_to_array($this->couponCollection)
+            iterator_to_array($this->coupons)
         );
     }
 }

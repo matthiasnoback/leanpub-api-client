@@ -2,7 +2,7 @@
 
 namespace Matthias\LeanpubApi\Dto;
 
-class CouponCollection implements \IteratorAggregate, \Countable
+class Coupons implements \IteratorAggregate, \Countable
 {
     private $coupons = array();
 

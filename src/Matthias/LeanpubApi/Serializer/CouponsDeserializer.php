@@ -4,7 +4,7 @@ namespace Matthias\LeanpubApi\Serializer;
 
 use Assert\Assertion;
 use Matthias\LeanpubApi\Dto\Coupon;
-use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\Coupons;
 use Matthias\LeanpubApi\Dto\PackageDiscount;
 
 class CouponsDeserializer implements DtoDeserializerInterface
@@ -15,7 +15,7 @@ class CouponsDeserializer implements DtoDeserializerInterface
 
         $coupons = json_decode($rawData, true);
 
-        $dto = new CouponCollection();
+        $dto = new Coupons();
 
         foreach ($coupons as $couponArray) {
             $dto->addCoupon($this->createCouponFromArray($couponArray));

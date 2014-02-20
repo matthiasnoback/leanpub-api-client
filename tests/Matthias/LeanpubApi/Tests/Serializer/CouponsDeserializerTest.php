@@ -3,7 +3,7 @@
 namespace Matthias\LeanpubApi\Tests\Serializer;
 
 use Matthias\LeanpubApi\Dto\Coupon;
-use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\Coupons;
 use Matthias\LeanpubApi\Dto\PackageDiscount;
 use Matthias\LeanpubApi\Serializer\CouponsDeserializer;
 
