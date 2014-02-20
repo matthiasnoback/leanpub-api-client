@@ -2,14 +2,13 @@
 
 namespace Matthias\LeanpubApi\Tests\Client;
 
-use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Matthias\LeanpubApi\Client\GuzzleClient;
 
 class GuzzleClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $guzzleClient;
 

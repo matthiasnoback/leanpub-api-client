@@ -54,30 +54,34 @@ class CouponsDeserializerTest extends \PHPUnit_Framework_TestCase
     "num_uses": 12,
     "start_date": "2013-04-17",
     "suspended": false,
-    "updated_at": "2013-04-17T22:12:58Z",
+    "updated_at": "2013-04-17T23:12:58Z",
     "book_id": 123
   }
 ]
 EOF;
 
-        $couponCollection = new CouponCollection();
-        $coupon = new Coupon();
-        $coupon->setCouponCode('NOT_A_REAL_COUPON');
-        $coupon->setSuspended(false);
-        $coupon->setStartDate(new \DateTime('2013-04-17'));
-        $coupon->setEndDate(new \DateTime('2016-05-17'));
-        $coupon->setBookId(123);
-        $coupon->setCreatedAt(new \DateTime('2013-04-17T22:12:58Z'));
-        $coupon->setUpdatedAt(new \DateTime('2013-04-17T22:12:58Z'));
-        $coupon->setMaxUses(null);
-        $coupon->setNumUses(12);
-        $coupon->setNote('This is not a real coupon');
-        $coupon->addPackageDiscount(new PackageDiscount('book', 2));
-        $coupon->addPackageDiscount(new PackageDiscount('teamedition', 4));
-        $couponCollection->addCoupon($coupon);
-
         $actualCollection = $this->couponsDeserializer->deserialize($responseBody, 'json');
+        $this->assertCount(1, $actualCollection);
 
-        $this->assertEquals($couponCollection, $actualCollection);
+        $actualCoupons = $actualCollection->getCoupons();
+        $actualCoupon = reset($actualCoupons);
+        /* @var $actualCoupon Coupon */
+
+        $this->assertSame('NOT_A_REAL_COUPON', $actualCoupon ->getCouponCode());
+        $this->assertSame(false, $actualCoupon ->isSuspended());
+        $this->assertEquals(new \DateTime('2013-04-17'), $actualCoupon ->getStartDate());
+        $this->assertEquals(new \DateTime('2016-05-17'), $actualCoupon ->getEndDate());
+        $this->assertSame(123, $actualCoupon ->getBookId());
+        $this->assertEquals(new \DateTime('2013-04-17T22:12:58Z'), $actualCoupon ->getCreatedAt());
+        $this->assertEquals(new \DateTime('2013-04-17T23:12:58Z'), $actualCoupon ->getUpdatedAt());
+        $this->assertSame(null, $actualCoupon ->getMaxUses());
+        $this->assertSame(12, $actualCoupon ->getNumUses());
+        $this->assertSame('This is not a real coupon', $actualCoupon ->getNote());
+        $packageDiscounts = $actualCoupon->getPackageDiscounts();
+        $this->assertCount(2, $packageDiscounts);
+        $this->assertSame('book', $packageDiscounts[0]->getPackageSlug());
+        $this->assertEquals(2, $packageDiscounts[0]->getDiscountedPrice());
+        $this->assertSame('teamedition', $packageDiscounts[1]->getPackageSlug());
+        $this->assertEquals(4, $packageDiscounts[1]->getDiscountedPrice());
     }
 }

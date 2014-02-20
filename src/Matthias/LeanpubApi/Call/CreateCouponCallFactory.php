@@ -19,6 +19,6 @@ class CreateCouponCallFactory
 
     public function create($bookSlug, CreateCoupon $createCoupon)
     {
-        return new CreateCouponCall($this->validator, $this->serializer, $bookSlug, $createCoupon);
+        return new CreateCouponCall($this->validator, $this->serializer, $bookSlug, $createCoupon, 'json');
     }
 }

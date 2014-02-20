@@ -34,18 +34,29 @@ class IndividualPurchasesDeserializerTest extends \PHPUnit_Framework_TestCase
     public function it_deserializes_a_collection_of_invididual_purchases()
     {
         $responseBody = <<<EOF
-[{
-    "purchase_uuid": "the-purchase-uuid"
-}]
+[{"author_paid_out_at":"2014-02-10T14:07:11Z","author_royalties":"15.0","author_royalty_percentage":"75.0","cause_paid_out_at":"2014-02-14T14:07:11Z","cause_royalties":"5.0","cause_royalty_percentage":"25.0","created_at":"2014-01-02T14:07:11Z","publisher_paid_out_at":null,"publisher_royalties":"0.0","royalty_days_hold":45,"author_username":"matthiasnoback","publisher_slug":"","user_email":"matthiasnoback@gmail.com","purchase_uuid":"1jlxbbEgr6jeQwRSa4ub5c"}]
 EOF;
 
-        $individualPurchases = new IndividualPurchases();
-        $purchase = new Purchase();
-        $purchase->setId('the-purchase-uuid');
-        $individualPurchases->addPurchase($purchase);
-
         $actualCollection = $this->individualPurchasesDeserializer->deserialize($responseBody, 'json');
+        $this->assertCount(1, $actualCollection);
+        $actualPurchases = $actualCollection->getPurchases();
+        $actualPurchase = reset($actualPurchases);
+        /* @var $actualPurchase Purchase */
 
-        $this->assertEquals($individualPurchases, $actualCollection);
+        $this->assertEquals(new \DateTime('2014-02-10T14:07:11Z'), $actualPurchase->getAuthorPaidOutAt());
+        $this->assertEquals(15, $actualPurchase->getAuthorRoyalties());
+        $this->assertEquals(75, $actualPurchase->getAuthorRoyaltyPercentage());
+        $this->assertEquals(new \DateTime('2014-02-14T14:07:11Z'), $actualPurchase->getCausePaidOutAt());
+        $this->assertEquals(5, $actualPurchase->getCauseRoyalties());
+        $this->assertEquals(25, $actualPurchase->getCauseRoyaltyPercentage());
+        $this->assertEquals(new \DateTime('2014-01-02T14:07:11Z'), $actualPurchase->getCreatedAt());
+        $this->assertSame(null, $actualPurchase->getPublisherPaidOutAt());
+        $this->assertEquals(0, $actualPurchase->getPublisherRoyalties());
+        $this->assertSame(45, $actualPurchase->getRoyaltyDaysHold());
+        $this->assertSame('matthiasnoback', $actualPurchase->getAuthorUsername());
+        $this->assertSame(45, $actualPurchase->getRoyaltyDaysHold());
+        $this->assertSame('', $actualPurchase->getPublisherSlug());
+        $this->assertSame('matthiasnoback@gmail.com', $actualPurchase->getUserEmail());
+        $this->assertSame('1jlxbbEgr6jeQwRSa4ub5c', $actualPurchase->getPurchaseUuid());
     }
 }

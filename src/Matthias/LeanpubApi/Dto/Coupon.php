@@ -149,7 +149,7 @@ class Coupon
         $this->suspended = (boolean) $suspended;
     }
 
-    public function getSuspended()
+    public function isSuspended()
     {
         return $this->suspended;
     }

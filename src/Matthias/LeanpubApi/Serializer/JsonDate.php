@@ -15,6 +15,10 @@ class JsonDate
 
     public static function toDateTime($date)
     {
+        if ($date === null) {
+            return null;
+        }
+
         return new \DateTime($date);
     }
 }

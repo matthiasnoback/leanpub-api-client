@@ -5,7 +5,10 @@ namespace Matthias\LeanpubApi\Tests;
 use Guzzle\Http\Client;
 use Matthias\LeanpubApi\Client\GuzzleClient;
 use Matthias\LeanpubApi\Dto\CouponCollection;
+use Matthias\LeanpubApi\Dto\CreateCoupon;
 use Matthias\LeanpubApi\Dto\IndividualPurchases;
+use Matthias\LeanpubApi\Dto\PackageDiscount;
+use Matthias\LeanpubApi\Dto\Purchase;
 use Matthias\LeanpubApi\LeanpubApi;
 use Matthias\LeanpubApi\LeanpubApiFactory;
 
@@ -45,9 +48,43 @@ class FunctionalTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fetches_individual_purchases()
     {
-        $invidualPurchases = $this->leanpubApi->listIndividualPurchases($this->bookSlug);
+        $individualPurchases = $this->leanpubApi->listIndividualPurchases($this->bookSlug, 3);
 
-        $this->assertTrue($invidualPurchases instanceof IndividualPurchases);
+        $this->assertTrue($individualPurchases instanceof IndividualPurchases);
+    }
+
+    /**
+     * @test
+     */
+    public function it_fetches_a_traversable_list_of_all_individual_purchases()
+    {
+        $loopCount = 0;
+        $maxLoopCount = 100;
+
+        foreach ($this->leanpubApi->getAllIndividualPurchases($this->bookSlug) as $purchase) {
+            if ($loopCount > $maxLoopCount) {
+                break;
+            }
+
+            if (!($purchase instanceof Purchase)) {
+                $this->fail('Expected to retrieve only instances of Purchase');
+            }
+
+            $loopCount++;
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_coupon()
+    {
+        $createCoupon = new CreateCoupon(uniqid(), new \DateTime());
+        $createCoupon->setSuspended(true);
+        $createCoupon->addPackageDiscount(new PackageDiscount('book', 100));
+        $createCoupon->setNote('Coupon created by unit test');
+
+        $this->assertSame(true, $this->leanpubApi->createCoupon($this->bookSlug, $createCoupon));
     }
 
     private function getEnvOrSkipTest($env)

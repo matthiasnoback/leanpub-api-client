@@ -26,7 +26,21 @@ class IndividualPurchasesDeserializer implements DtoDeserializerInterface
     private function createPurchaseFromArray(array $purchaseArray)
     {
         $purchase = new Purchase();
-        $purchase->setId($purchaseArray['purchase_uuid']);
+
+        $purchase->setAuthorPaidOutAt(JsonDate::toDateTime($purchaseArray['author_paid_out_at']));
+        $purchase->setAuthorRoyalties($purchaseArray['author_royalties']);
+        $purchase->setAuthorRoyaltyPercentage($purchaseArray['author_royalty_percentage']);
+        $purchase->setCausePaidOutAt(JsonDate::toDateTime($purchaseArray['cause_paid_out_at']));
+        $purchase->setCauseRoyalties($purchaseArray['cause_royalties']);
+        $purchase->setCauseRoyaltyPercentage($purchaseArray['cause_royalty_percentage']);
+        $purchase->setCreatedAt(JsonDate::toDateTime($purchaseArray['created_at']));
+        $purchase->setPublisherPaidOutAt(JsonDate::toDateTime($purchaseArray['publisher_paid_out_at']));
+        $purchase->setPublisherRoyalties($purchaseArray['publisher_royalties']);
+        $purchase->setRoyaltyDaysHold($purchaseArray['royalty_days_hold']);
+        $purchase->setAuthorUsername($purchaseArray['author_username']);
+        $purchase->setPublisherSlug($purchaseArray['publisher_slug']);
+        $purchase->setUserEmail($purchaseArray['user_email']);
+        $purchase->setPurchaseUuid($purchaseArray['purchase_uuid']);
 
         return $purchase;
     }

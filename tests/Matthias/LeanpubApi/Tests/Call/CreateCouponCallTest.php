@@ -4,18 +4,16 @@ namespace Matthias\LeanpubApi\Tests\Call;
 
 use Matthias\LeanpubApi\Call\CreateCouponCall;
 use Matthias\LeanpubApi\Dto\CreateCoupon;
-use Matthias\LeanpubApi\Serializer\DtoSerializerInterface;
-use Matthias\LeanpubApi\Validator\DtoValidatorInterface;
 
 class CreateCouponCallTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var DtoValidatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $validator;
 
     /**
-     * @var DtoSerializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $serializer;
 
@@ -34,7 +32,7 @@ class CreateCouponCallTest extends \PHPUnit_Framework_TestCase
         $this->validator = $this->getMock('Matthias\LeanpubApi\Validator\DtoValidatorInterface');
         $this->serializer = $this->getMock('Matthias\LeanpubApi\Serializer\DtoSerializerInterface');
         $this->createCoupon = new CreateCoupon('coupon-code', new \DateTime());
-        $this->createCouponCall = new CreateCouponCall($this->validator, $this->serializer, 'book-slug', $this->createCoupon);
+        $this->createCouponCall = new CreateCouponCall($this->validator, $this->serializer, 'book-slug', $this->createCoupon, 'json');
     }
 
     /**

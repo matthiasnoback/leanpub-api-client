@@ -3,12 +3,11 @@
 namespace Matthias\LeanpubApi\Tests\Call;
 
 use Matthias\LeanpubApi\Call\ListAllSalesCall;
-use Matthias\LeanpubApi\Serializer\DtoDeserializerInterface;
 
 class ListAllSalesCallTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var DtoDeserializerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $deserializer;
 

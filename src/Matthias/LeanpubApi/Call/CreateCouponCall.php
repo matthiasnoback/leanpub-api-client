@@ -18,12 +18,14 @@ class CreateCouponCall extends AbstractCall
         DtoValidatorInterface $validator,
         DtoSerializerInterface $serializer,
         $bookSlug,
-        CreateCoupon $coupon
+        CreateCoupon $coupon,
+        $format
     ) {
         $this->validator = $validator;
         $this->serializer = $serializer;
         $this->bookSlug = $bookSlug;
         $this->coupon = $coupon;
+        $this->setFormat($format);
     }
 
     public function getMethod()
