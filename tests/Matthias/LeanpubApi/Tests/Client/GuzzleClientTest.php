@@ -83,7 +83,7 @@ class GuzzleClientTest extends \PHPUnit_Framework_TestCase
         $actualResponseDto = $this->apiClient->callApi($apiCall);
         $this->assertSame($responseDto, $actualResponseDto);
 
-        /* @var $actualRequest \Guzzle\Http\Message\RequestInterface */
+        /** @var $actualRequest \Guzzle\Http\Message\RequestInterface */
         $this->assertEquals($apiCallHeaders['Content-Type'], $actualRequest->getHeader('Content-Type'));
         $this->assertEquals($apiCallMethod, $actualRequest->getMethod());
         $this->assertEquals($apiCallPath, $actualRequest->getPath());

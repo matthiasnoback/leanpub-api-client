@@ -65,8 +65,8 @@ class CreateCouponCallTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer
             ->expects($this->once())
-            ->method('serialize', 'json')
-            ->with($this->createCoupon)
+            ->method('serialize')
+            ->with($this->createCoupon, 'json')
             ->will($this->returnValue($serializedCreateCoupon));
 
         $this->assertSame($serializedCreateCoupon, $this->createCouponCall->getBody());

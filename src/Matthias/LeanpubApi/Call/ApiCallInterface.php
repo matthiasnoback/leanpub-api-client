@@ -14,5 +14,8 @@ interface ApiCallInterface
 
     public function getBody();
 
+    /**
+     * @param string
+     */
     public function createResponseDto($responseBody);
 }
