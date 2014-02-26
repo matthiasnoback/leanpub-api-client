@@ -2,6 +2,7 @@
 
 namespace Matthias\LeanpubApi;
 
+use Assert\Assertion;
 use Matthias\LeanpubApi\Call\ListAllSalesCallFactory;
 use Matthias\LeanpubApi\Client\ClientInterface;
 use Matthias\LeanpubApi\Dto\IndividualPurchases;
@@ -12,20 +13,21 @@ class IndividualPurchasesIterator implements \RecursiveIterator
     private $listAllSalesCallFactory;
     private $bookSlug;
 
-    private $page;
-
     /**
      * @var IndividualPurchases
      */
     private $purchaseItemsDto;
-
     private $resultFetchedForPage;
+    private $page;
 
+    /**
+     * @param string $bookSlug
+     */
     public function __construct(ClientInterface $apiClient, ListAllSalesCallFactory $listAllSalesCallFactory, $bookSlug)
     {
         $this->apiClient = $apiClient;
-        $this->bookSlug = $bookSlug;
         $this->listAllSalesCallFactory = $listAllSalesCallFactory;
+        $this->setBookSlug($bookSlug);
     }
 
     public function current()
@@ -66,5 +68,16 @@ class IndividualPurchasesIterator implements \RecursiveIterator
     public function getChildren()
     {
         return $this->purchaseItemsDto;
+    }
+
+    /**
+     * @param string $bookSlug
+     */
+    private function setBookSlug($bookSlug)
+    {
+        Assertion::string($bookSlug);
+        Assertion::notEmpty($bookSlug);
+
+        $this->bookSlug = $bookSlug;
     }
 }

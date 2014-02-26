@@ -13,6 +13,11 @@ class ListAllSalesCallFactory
         $this->deserializer = $deserializer;
     }
 
+    /**
+     * @param string $bookSlug
+     * @param integer $page
+     * @param string $format
+     */
     public function create($bookSlug, $page, $format)
     {
         return new ListAllSalesCall($this->deserializer, $bookSlug, $page, $format);

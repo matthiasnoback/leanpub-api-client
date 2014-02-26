@@ -8,6 +8,10 @@ class ListCouponsCall extends AbstractCall
 {
     private $deserializer;
 
+    /**
+     * @param string $bookSlug
+     * @param string $format
+     */
     public function __construct(DtoDeserializerInterface $deserializer, $bookSlug, $format)
     {
         $this->setBookSlug($bookSlug);

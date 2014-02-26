@@ -2,6 +2,7 @@
 
 namespace Matthias\LeanpubApi\Call;
 
+use Assert\Assertion;
 use Matthias\LeanpubApi\Client\Exception\RequestFailedException;
 use Matthias\LeanpubApi\Dto\CreateCoupon;
 use Matthias\LeanpubApi\Serializer\DtoSerializerInterface;
@@ -14,6 +15,10 @@ class CreateCouponCall extends AbstractCall
     private $coupon;
     protected $bookSlug;
 
+    /**
+     * @param string $bookSlug
+     * @param string $format
+     */
     public function __construct(
         DtoValidatorInterface $validator,
         DtoSerializerInterface $serializer,
@@ -23,7 +28,7 @@ class CreateCouponCall extends AbstractCall
     ) {
         $this->validator = $validator;
         $this->serializer = $serializer;
-        $this->bookSlug = $bookSlug;
+        $this->setBookSlug($bookSlug);
         $this->coupon = $coupon;
         $this->setFormat($format);
     }

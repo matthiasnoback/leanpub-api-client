@@ -11,14 +11,11 @@ class Coupons implements \IteratorAggregate, \Countable
         $this->coupons[$coupon->getCouponCode()] = $coupon;
     }
 
-    public function exists($couponCode)
+    public function has($couponCode)
     {
         return isset($this->coupons[$couponCode]);
     }
 
-    /**
-     * @return Coupon[]
-     */
     public function getCoupons()
     {
         return $this->coupons;

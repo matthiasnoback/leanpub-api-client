@@ -23,6 +23,9 @@ class IndividualPurchasesDeserializer implements DtoDeserializerInterface
         return $dto;
     }
 
+    /**
+     * @param array<string,mixed> $purchaseArray
+     */
     private function createPurchaseFromArray(array $purchaseArray)
     {
         $purchase = new Purchase();

@@ -41,12 +41,18 @@ class CreateCoupon implements DtoInterface
      */
     private $packageDiscounts = array();
 
+    /**
+     * @param string $couponCode
+     */
     public function __construct($couponCode, \DateTime $startDate)
     {
         $this->setCouponCode($couponCode);
         $this->setStartDate($startDate);
     }
 
+    /**
+     * @param string $couponCode
+     */
     public function setCouponCode($couponCode)
     {
         Assertion::notEmpty($couponCode, 'Coupon code can not be empty');
@@ -64,11 +70,17 @@ class CreateCoupon implements DtoInterface
         $this->endDate = $endDate;
     }
 
+    /**
+     * @param integer $maxUses
+     */
     public function setMaxUses($maxUses)
     {
         $this->maxUses = $maxUses;
     }
 
+    /**
+     * @param string $note
+     */
     public function setNote($note)
     {
         Assertion::nullOrString($note, 'Note should be null or a string', null);
@@ -76,6 +88,9 @@ class CreateCoupon implements DtoInterface
         $this->note = (string) $note;
     }
 
+    /**
+     * @param boolean $suspended
+     */
     public function setSuspended($suspended)
     {
         Assertion::boolean($suspended);

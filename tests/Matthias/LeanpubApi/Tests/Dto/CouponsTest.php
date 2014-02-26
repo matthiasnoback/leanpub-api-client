@@ -27,8 +27,8 @@ class CouponsTest extends \PHPUnit_Framework_TestCase
 
         $this->coupons->addCoupon($coupon);
 
-        $this->assertTrue($this->coupons->exists('coupon-code'));
-        $this->assertFalse($this->coupons->exists('non-existing-coupon-code'));
+        $this->assertTrue($this->coupons->has('coupon-code'));
+        $this->assertFalse($this->coupons->has('non-existing-coupon-code'));
     }
 
     /**

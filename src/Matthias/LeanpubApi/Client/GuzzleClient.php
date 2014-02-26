@@ -17,6 +17,9 @@ class GuzzleClient implements ClientInterface
 
     private $apiKey;
 
+    /**
+     * @param string $apiKey
+     */
     public function __construct(GuzzleClientInterface $guzzleClient, $apiKey)
     {
         $this->setGuzzleClient($guzzleClient);
@@ -62,8 +65,12 @@ class GuzzleClient implements ClientInterface
         $this->guzzleClient = $guzzleClient;
     }
 
+    /**
+     * @param string $apiKey
+     */
     private function setApiKey($apiKey)
     {
+        Assertion::string($apiKey);
         Assertion::notEmpty($apiKey, 'API key should not be empty');
         $this->apiKey = $apiKey;
     }

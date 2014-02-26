@@ -10,6 +10,11 @@ class ListAllSalesCall extends AbstractCall
     private $page;
     private $deserializer;
 
+    /**
+     * @param string $bookSlug
+     * @param integer $page
+     * @param string $format
+     */
     public function __construct(DtoDeserializerInterface $deserializer, $bookSlug, $page, $format)
     {
         $this->deserializer = $deserializer;

@@ -29,6 +29,9 @@ class Purchase
         return $this->authorPaidOutAt;
     }
 
+    /**
+     * @param float $authorRoyalties
+     */
     public function setAuthorRoyalties($authorRoyalties)
     {
         $this->authorRoyalties = (float) $authorRoyalties;
@@ -39,6 +42,9 @@ class Purchase
         return $this->authorRoyalties;
     }
 
+    /**
+     * @param float $authorRoyaltyPercentage
+     */
     public function setAuthorRoyaltyPercentage($authorRoyaltyPercentage)
     {
         $this->authorRoyaltyPercentage = (float) $authorRoyaltyPercentage;
@@ -49,9 +55,12 @@ class Purchase
         return $this->authorRoyaltyPercentage;
     }
 
+    /**
+     * @param string $authorUsername
+     */
     public function setAuthorUsername($authorUsername)
     {
-        $this->authorUsername = $authorUsername;
+        $this->authorUsername = (string) $authorUsername;
     }
 
     public function getAuthorUsername()
@@ -69,6 +78,9 @@ class Purchase
         return $this->causePaidOutAt;
     }
 
+    /**
+     * @param float $causeRoyalties
+     */
     public function setCauseRoyalties($causeRoyalties)
     {
         $this->causeRoyalties = (float) $causeRoyalties;
@@ -79,6 +91,9 @@ class Purchase
         return $this->causeRoyalties;
     }
 
+    /**
+     * @param float $causeRoyaltyPercentage
+     */
     public function setCauseRoyaltyPercentage($causeRoyaltyPercentage)
     {
         $this->causeRoyaltyPercentage = (float) $causeRoyaltyPercentage;
@@ -109,6 +124,9 @@ class Purchase
         return $this->publisherPaidOutAt;
     }
 
+    /**
+     * @param float $publisherRoyalties
+     */
     public function setPublisherRoyalties($publisherRoyalties)
     {
         $this->publisherRoyalties = (float) $publisherRoyalties;
@@ -119,9 +137,12 @@ class Purchase
         return $this->publisherRoyalties;
     }
 
+    /**
+     * @param string $publisherSlug
+     */
     public function setPublisherSlug($publisherSlug)
     {
-        $this->publisherSlug = $publisherSlug;
+        $this->publisherSlug = (string) $publisherSlug;
     }
 
     public function getPublisherSlug()
@@ -129,9 +150,12 @@ class Purchase
         return $this->publisherSlug;
     }
 
+    /**
+     * @param string $purchaseUuid
+     */
     public function setPurchaseUuid($purchaseUuid)
     {
-        $this->purchaseUuid = $purchaseUuid;
+        $this->purchaseUuid = (string) $purchaseUuid;
     }
 
     public function getPurchaseUuid()
@@ -139,6 +163,9 @@ class Purchase
         return $this->purchaseUuid;
     }
 
+    /**
+     * @param integer $royaltyDaysHold
+     */
     public function setRoyaltyDaysHold($royaltyDaysHold)
     {
         $this->royaltyDaysHold = (integer) $royaltyDaysHold;
@@ -149,9 +176,12 @@ class Purchase
         return $this->royaltyDaysHold;
     }
 
+    /**
+     * @param string $userEmail
+     */
     public function setUserEmail($userEmail)
     {
-        $this->userEmail = $userEmail;
+        $this->userEmail = (string) $userEmail;
     }
 
     public function getUserEmail()

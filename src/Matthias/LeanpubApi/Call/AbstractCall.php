@@ -24,13 +24,20 @@ abstract class AbstractCall implements ApiCallInterface
         return null;
     }
 
+    /**
+     * @param string $bookSlug
+     */
     protected function setBookSlug($bookSlug)
     {
+        Assertion::string($bookSlug);
         Assertion::notEmpty($bookSlug);
 
         $this->bookSlug = $bookSlug;
     }
 
+    /**
+     * @param string $format
+     */
     protected function setFormat($format)
     {
         Assertion::inArray($format, array('json', 'xml'));

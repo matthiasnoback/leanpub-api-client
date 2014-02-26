@@ -24,6 +24,9 @@ class CouponsDeserializer implements DtoDeserializerInterface
         return $dto;
     }
 
+    /**
+     * @param array<string,mixed> $couponArray
+     */
     private function createCouponFromArray(array $couponArray)
     {
         $coupon = new Coupon();
@@ -47,7 +50,10 @@ class CouponsDeserializer implements DtoDeserializerInterface
         return $coupon;
     }
 
-    private function createPackageDiscountFromArray($packageDiscountArray)
+    /**
+     * @param array<string,mixed> $packageDiscountArray
+     */
+    private function createPackageDiscountFromArray(array $packageDiscountArray)
     {
         return new PackageDiscount(
             $packageDiscountArray['package_slug'],

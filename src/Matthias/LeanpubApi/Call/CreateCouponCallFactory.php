@@ -17,6 +17,9 @@ class CreateCouponCallFactory
         $this->serializer = $serializer;
     }
 
+    /**
+     * @param string $bookSlug
+     */
     public function create($bookSlug, CreateCoupon $createCoupon)
     {
         return new CreateCouponCall($this->validator, $this->serializer, $bookSlug, $createCoupon, 'json');

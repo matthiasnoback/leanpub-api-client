@@ -31,6 +31,7 @@ class LeanpubApi
     }
 
     /**
+     * @param string $bookSlug
      * @return Coupons
      */
     public function listCoupons($bookSlug)
@@ -39,6 +40,8 @@ class LeanpubApi
     }
 
     /**
+     * @param string $bookSlug
+     * @param integer $page
      * @return IndividualPurchases
      */
     public function listIndividualPurchases($bookSlug, $page = 1)
@@ -47,6 +50,7 @@ class LeanpubApi
     }
 
     /**
+     * @param string $bookSlug
      * @return Purchase[]
      */
     public function listAllIndividualPurchases($bookSlug)
@@ -55,6 +59,7 @@ class LeanpubApi
     }
 
     /**
+     * @param string $bookSlug
      * @return boolean
      */
     public function createCoupon($bookSlug, CreateCoupon $coupon)

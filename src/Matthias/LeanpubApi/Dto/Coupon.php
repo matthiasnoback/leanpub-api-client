@@ -64,6 +64,9 @@ class Coupon
         $this->packageDiscounts[] = $packageDiscount;
     }
 
+    /**
+     * @param string $bookId
+     */
     public function setBookId($bookId)
     {
         $this->bookId = $bookId;
@@ -74,6 +77,9 @@ class Coupon
         return $this->bookId;
     }
 
+    /**
+     * @param string $couponCode
+     */
     public function setCouponCode($couponCode)
     {
         $this->couponCode = $couponCode;
@@ -104,6 +110,9 @@ class Coupon
         return $this->endDate;
     }
 
+    /**
+     * @param integer $maxUses
+     */
     public function setMaxUses($maxUses)
     {
         $this->maxUses = (integer) $maxUses;
@@ -114,6 +123,9 @@ class Coupon
         return $this->maxUses;
     }
 
+    /**
+     * @param string $note
+     */
     public function setNote($note)
     {
         $this->note = $note;
@@ -124,6 +136,9 @@ class Coupon
         return $this->note;
     }
 
+    /**
+     * @param integer $numUses
+     */
     public function setNumUses($numUses)
     {
         $this->numUses = (integer) $numUses;
@@ -144,6 +159,9 @@ class Coupon
         return $this->startDate;
     }
 
+    /**
+     * @param boolean $suspended
+     */
     public function setSuspended($suspended)
     {
         $this->suspended = (boolean) $suspended;

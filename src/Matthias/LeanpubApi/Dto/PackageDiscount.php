@@ -9,12 +9,19 @@ class PackageDiscount
     private $packageSlug;
     private $discountedPrice;
 
+    /**
+     * @param string $packageSlug
+     * @param float $discountedPrice
+     */
     public function __construct($packageSlug, $discountedPrice)
     {
         $this->setPackageSlug($packageSlug);
         $this->setDiscountedPrice($discountedPrice);
     }
 
+    /**
+     * @param string $packageSlug
+     */
     private function setPackageSlug($packageSlug)
     {
         Assertion::notEmpty($packageSlug, 'Package slug should not be empty');
@@ -22,6 +29,9 @@ class PackageDiscount
         $this->packageSlug = $packageSlug;
     }
 
+    /**
+     * @param float $discountedPrice
+     */
     private function setDiscountedPrice($discountedPrice)
     {
         Assertion::numeric($discountedPrice, 'Discounted price should be numeric');
