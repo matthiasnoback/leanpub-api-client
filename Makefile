@@ -7,6 +7,6 @@ vendor: composer.json
 	bin/composer install --prefer-dist
 
 .PHONY: test
-test:
+test: vendor
 	bin/php vendor/bin/phpstan analyze
 	bin/php vendor/bin/phpunit -v

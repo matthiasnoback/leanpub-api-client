@@ -1,50 +1,49 @@
 <?php
 declare(strict_types=1);
 
-namespace LeanpubApi\BookSummary;
+namespace LeanpubApi\JobStatus;
 
 use Http\Message\RequestFactory;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
-use LeanpubApi\IndividualPurchases\CouldNotLoadIndividualPurchases;
 use Psr\Http\Client\ClientInterface;
 use Safe\Exceptions\JsonException;
 use function Safe\json_decode;
 
-final class GetBookSummaryFromLeanpubApi implements GetBookSummary
+final class GetJobStatusFromLeanpubApi implements GetJobStatus
 {
+    private BookSlug $bookSlug;
+
     private ApiKey $apiKey;
 
     private BaseUrl $baseUrl;
-
-    private BookSlug $bookSlug;
 
     private ClientInterface $httpClient;
 
     private RequestFactory $requestFactory;
 
     public function __construct(
-        ApiKey $apiKey,
-        BaseUrl $baseUrl,
         BookSlug $bookSlug,
+        ApiKey $apiKey,
+        BaseUrl $leanpubApiBaseUrl,
         ClientInterface $httpClient,
         RequestFactory $requestFactory
     ) {
-        $this->apiKey = $apiKey;
-        $this->baseUrl = $baseUrl;
         $this->bookSlug = $bookSlug;
+        $this->apiKey = $apiKey;
+        $this->baseUrl = $leanpubApiBaseUrl;
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
     }
 
-    public function getBookSummary(): BookSummary
+    public function getJobStatus(): JobStatus
     {
         $response = $this->httpClient->sendRequest(
             $this->requestFactory->createRequest(
                 'GET',
                 sprintf(
-                    '%s/%s.json?api_key=%s',
+                    '%s/%s/job_status.json?api_key=%s',
                     $this->baseUrl->asString(),
                     $this->bookSlug->asString(),
                     $this->apiKey->asString()
@@ -52,14 +51,14 @@ final class GetBookSummaryFromLeanpubApi implements GetBookSummary
             )
         );
 
-        $jsonData = $response->getBody()->getContents();
+        $responseBody = $response->getBody()->getContents();
 
         try {
-            $decodedData = json_decode($jsonData, true);
-        } catch (JsonException $previous) {
-            throw CouldNotLoadIndividualPurchases::becauseJsonDataIsInvalid($jsonData, $previous);
+            $responseData = json_decode($responseBody, true);
+        } catch (JsonException $exception) {
+            throw CouldNotGetJobStatus::becauseResponseContainsInvalidJson($responseBody);
         }
 
-        return BookSummary::fromJsonDecodedData($decodedData);
+        return JobStatus::fromJsonDecodedData($responseData);
     }
 }

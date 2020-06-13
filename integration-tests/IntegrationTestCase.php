@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace IntegrationTests;
 
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
@@ -37,7 +38,8 @@ abstract class IntegrationTestCase extends TestCase
                 [
                     'timeout' => 10
                 ]
-            )
+            ),
+            new GuzzleMessageFactory()
         );
     }
 }

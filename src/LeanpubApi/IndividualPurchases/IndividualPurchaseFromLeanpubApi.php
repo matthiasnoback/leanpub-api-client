@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace LeanpubApi\IndividualPurchases;
 
 use Generator;
-use GuzzleHttp\Psr7\Request;
+use Http\Message\RequestFactory;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
@@ -19,20 +19,24 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
 
     private ApiKey $apiKey;
 
-    private BaseUrl $leanpubApiBaseUrl;
+    private BaseUrl $baseUrl;
 
     private ClientInterface $httpClient;
+
+    private RequestFactory $requestFactory;
 
     public function __construct(
         BookSlug $bookSlug,
         ApiKey $apiKey,
         BaseUrl $leanpubApiBaseUrl,
-        ClientInterface $httpClient
+        ClientInterface $httpClient,
+        RequestFactory $requestFactory
     ) {
         $this->bookSlug = $bookSlug;
         $this->apiKey = $apiKey;
-        $this->leanpubApiBaseUrl = $leanpubApiBaseUrl;
+        $this->baseUrl = $leanpubApiBaseUrl;
         $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
     }
 
     public function allIndividualPurchases(): Generator
@@ -66,11 +70,11 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
     private function loadPage(int $page): array
     {
         $response = $this->httpClient->sendRequest(
-            new Request(
+            $this->requestFactory->createRequest(
                 'GET',
                 sprintf(
                     '%s/%s/individual_purchases.json?api_key=%s&page=%d',
-                    $this->leanpubApiBaseUrl->asString(),
+                    $this->baseUrl->asString(),
                     $this->bookSlug->asString(),
                     $this->apiKey->asString(),
                     $page
