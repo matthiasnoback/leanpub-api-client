@@ -9,6 +9,3 @@ $dotenv = new Dotenv();
 
 $dotenv->load(dirname(__DIR__) . '/.env.dist');
 $dotenv->load(dirname(__DIR__) . '/.env.test');
-if (is_file(dirname(__DIR__) . '/.env')) {
-    $dotenv->load(dirname(__DIR__) . '/.env');
-}

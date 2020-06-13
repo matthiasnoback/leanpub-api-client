@@ -3,30 +3,20 @@ declare(strict_types=1);
 
 namespace IntegrationTests;
 
-use LeanpubApi\IndividualPurchases\IndividualPurchaseFromLeanpubApi;
 use LeanpubApi\IndividualPurchases\Purchase;
 
-/**
- * @group slow
- */
-final class IndividualPurchaseFromLeanpubApiTest extends IntegrationTestCase
+final class IndividualPurchasesTest extends IntegrationTestCase
 {
     /**
      * @test
      */
     public function it_loads_all_purchases_from_leanpub(): void
     {
-        $individualPurchases = new IndividualPurchaseFromLeanpubApi(
-            $this->bookSlug,
-            $this->apiKey,
-            $this->baseUrl
-        );
-
         $numberOfPurchases = 0;
 
         $lastPurchaseDate = null;
 
-        foreach ($individualPurchases->all() as $purchase) {
+        foreach ($this->leanpubApi->allIndividualPurchases() as $purchase) {
             self::assertInstanceOf(Purchase::class, $purchase);
             /** @var Purchase $purchase */
 

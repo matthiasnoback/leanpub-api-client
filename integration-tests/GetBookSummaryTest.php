@@ -4,28 +4,15 @@ declare(strict_types=1);
 namespace IntegrationTests;
 
 use LeanpubApi\BookSummary\BookSummary;
-use LeanpubApi\BookSummary\GetBookSummaryFromLeanpubApi;
 
-/**
- * @group slow
- */
-final class GetBookSummaryFromLeanpubApiTest extends IntegrationTestCase
+final class GetBookSummaryTest extends IntegrationTestCase
 {
-
-
     /**
      * @test
      */
     public function it_loads_a_book_summary_from_leanpub(): void
     {
-        $getBookSummaryFromLeanpubApi = new GetBookSummaryFromLeanpubApi(
-            $this->apiKey,
-            $this->baseUrl
-        );
-
-        $bookSummary = $getBookSummaryFromLeanpubApi->getBookSummary(
-            $this->bookSlug
-        );
+        $bookSummary = $this->leanpubApi->getBookSummary();
 
         self::assertEquals(
             new BookSummary(

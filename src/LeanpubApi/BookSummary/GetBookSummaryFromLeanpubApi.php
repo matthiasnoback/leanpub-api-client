@@ -3,42 +3,42 @@ declare(strict_types=1);
 
 namespace LeanpubApi\BookSummary;
 
-use Assert\Assert;
 use GuzzleHttp\Psr7\Request;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
 use LeanpubApi\IndividualPurchases\CouldNotLoadIndividualPurchases;
+use Psr\Http\Client\ClientInterface;
 use Safe\Exceptions\JsonException;
 use function Safe\json_decode;
 
 final class GetBookSummaryFromLeanpubApi implements GetBookSummary
 {
     private ApiKey $apiKey;
-    private BaseUrl $leanpubApiBaseUrl;
 
-    public function __construct(ApiKey $apiKey, BaseUrl $leanpubApiBaseUrl)
+    private BaseUrl $baseUrl;
+
+    private BookSlug $bookSlug;
+
+    private ClientInterface $httpClient;
+
+    public function __construct(ApiKey $apiKey, BaseUrl $baseUrl, BookSlug $bookSlug, ClientInterface $httpClient)
     {
         $this->apiKey = $apiKey;
-        $this->leanpubApiBaseUrl = $leanpubApiBaseUrl;
+        $this->baseUrl = $baseUrl;
+        $this->bookSlug = $bookSlug;
+        $this->httpClient = $httpClient;
     }
 
-    public function getBookSummary(BookSlug $bookSlug): BookSummary
+    public function getBookSummary(): BookSummary
     {
-        $adapter = GuzzleAdapter::createWithConfig(
-            [
-                'timeout' => 10
-            ]
-        );
-
-        $response = $adapter->sendRequest(
+        $response = $this->httpClient->sendRequest(
             new Request(
                 'GET',
                 sprintf(
                     '%s/%s.json?api_key=%s',
-                    $this->leanpubApiBaseUrl->asString(),
-                    $bookSlug->asString(),
+                    $this->baseUrl->asString(),
+                    $this->bookSlug->asString(),
                     $this->apiKey->asString()
                 )
             )

@@ -12,5 +12,5 @@ interface IndividualPurchases
      *
      * @return Generator<Purchase>
      */
-    public function all(): Generator;
+    public function allIndividualPurchases(): Generator;
 }

@@ -5,10 +5,10 @@ namespace LeanpubApi\IndividualPurchases;
 
 use Generator;
 use GuzzleHttp\Psr7\Request;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
+use Psr\Http\Client\ClientInterface;
 use Safe\Exceptions\JsonException;
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -21,25 +21,26 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
 
     private BaseUrl $leanpubApiBaseUrl;
 
-    public function __construct(BookSlug $bookSlug, ApiKey $apiKey, BaseUrl $leanpubApiBaseUrl)
-    {
+    private ClientInterface $httpClient;
+
+    public function __construct(
+        BookSlug $bookSlug,
+        ApiKey $apiKey,
+        BaseUrl $leanpubApiBaseUrl,
+        ClientInterface $httpClient
+    ) {
         $this->bookSlug = $bookSlug;
         $this->apiKey = $apiKey;
         $this->leanpubApiBaseUrl = $leanpubApiBaseUrl;
+        $this->httpClient = $httpClient;
     }
 
-    public function all(): Generator
+    public function allIndividualPurchases(): Generator
     {
-        $adapter = GuzzleAdapter::createWithConfig(
-            [
-                'timeout' => 10
-            ]
-        );
-
         $page = 1;
 
         while (true) {
-            $decodedData = $this->loadPage($adapter, $page);
+            $decodedData = $this->loadPage($page);
 
             if (isset($decodedData['data']) && count($decodedData['data']) === 0) {
                 // We know we reached the last page when the response contains an empty "data" key
@@ -48,7 +49,8 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
 
             foreach ($decodedData as $purchaseData) {
                 if (!is_array($purchaseData)) {
-                    throw CouldNotLoadIndividualPurchases::becauseJsonDataStructureIsInvalid(json_encode($purchaseData));
+                    throw CouldNotLoadIndividualPurchases::becauseJsonDataStructureIsInvalid(
+                        json_encode($purchaseData));
                 }
 
                 yield Purchase::createFromJsonDecodedData($purchaseData);
@@ -61,9 +63,9 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
     /**
      * @return array<mixed>
      */
-    private function loadPage(GuzzleAdapter $adapter, int $page): array
+    private function loadPage(int $page): array
     {
-        $response = $adapter->sendRequest(
+        $response = $this->httpClient->sendRequest(
             new Request(
                 'GET',
                 sprintf(
