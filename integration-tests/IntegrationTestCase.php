@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace IntegrationTests;
 
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
@@ -34,12 +34,8 @@ abstract class IntegrationTestCase extends TestCase
             ApiKey::fromString((string)$_ENV['LEANPUB_API_KEY']),
             BookSlug::fromString((string)$_ENV['LEANPUB_BOOK_SLUG']),
             BaseUrl::fromString((string)$_ENV['LEANPUB_BASE_URL']),
-            GuzzleAdapter::createWithConfig(
-                [
-                    'timeout' => 10
-                ]
-            ),
-            new GuzzleMessageFactory()
+            HttpClientDiscovery::find(),
+            MessageFactoryDiscovery::find()
         );
     }
 }

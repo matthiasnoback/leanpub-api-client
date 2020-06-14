@@ -23,7 +23,10 @@ final class GetBookSummaryTest extends IntegrationTestCase
                 'http://leanpub.com/web-application-architecture',
                 'http://leanpub.com/s/oxS20NHbGUnWb4GEJyHYcF.pdf',
                 'http://leanpub.com/s/oxS20NHbGUnWb4GEJyHYcF.epub',
-                'http://leanpub.com/s/oxS20NHbGUnWb4GEJyHYcF.mobi'
+                'http://leanpub.com/s/oxS20NHbGUnWb4GEJyHYcF.mobi',
+                'http://leanpub.com/s/iEYftYlCI4bpzluoXIVycA.pdf',
+                'http://leanpub.com/s/iEYftYlCI4bpzluoXIVycA.epub',
+                'http://leanpub.com/s/iEYftYlCI4bpzluoXIVycA.mobi'
             ),
             $bookSummary
         );

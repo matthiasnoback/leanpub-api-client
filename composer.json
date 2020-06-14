@@ -18,7 +18,8 @@
         "php-http/message-factory": "^1.0",
         "php-http/discovery": "^1.0",
         "ext-json": "*",
-        "php-http/message": "^1.8"
+        "php-http/message": "^1.8",
+        "symfony/console": "^5.1"
     },
     "license": "MIT",
     "require-dev": {
@@ -40,5 +41,6 @@
         "psr-4": {
             "IntegrationTests\\": "integration-tests/"
         }
-    }
+    },
+    "bin": ["leanpub.php"]
 }

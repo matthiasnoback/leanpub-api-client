@@ -24,6 +24,9 @@ final class BookSummary
     private string $epubPublishedUrl;
 
     private string $mobiPublishedUrl;
+    private string $pdfPreviewUrl;
+    private string $epubPreviewUrl;
+    private string $mobiPreviewUrl;
 
     public function __construct(
         string $title,
@@ -33,7 +36,10 @@ final class BookSummary
         string $url,
         string $pdfPublishedUrl,
         string $epubPublishedUrl,
-        string $mobiPublishedUrl
+        string $mobiPublishedUrl,
+        string $pdfPreviewUrl,
+        string $epubPreviewUrl,
+        string $mobiPreviewUrl
     ) {
         $this->title = $title;
         $this->subtitle = $subtitle;
@@ -43,6 +49,9 @@ final class BookSummary
         $this->pdfPublishedUrl = $pdfPublishedUrl;
         $this->epubPublishedUrl = $epubPublishedUrl;
         $this->mobiPublishedUrl = $mobiPublishedUrl;
+        $this->pdfPreviewUrl = $pdfPreviewUrl;
+        $this->epubPreviewUrl = $epubPreviewUrl;
+        $this->mobiPreviewUrl = $mobiPreviewUrl;
     }
 
     /**
@@ -58,7 +67,10 @@ final class BookSummary
             self::asString($data, 'url'),
             self::asString($data, 'pdf_published_url'),
             self::asString($data, 'epub_published_url'),
-            self::asString($data, 'mobi_published_url')
+            self::asString($data, 'mobi_published_url'),
+            self::asString($data, 'pdf_preview_url'),
+            self::asString($data, 'epub_preview_url'),
+            self::asString($data, 'mobi_preview_url')
         );
     }
 
@@ -132,5 +144,20 @@ final class BookSummary
     public function isMobiDownloadAvailable(): bool
     {
         return $this->mobiPublishedUrl() !== '';
+    }
+
+    public function pdfPreviewUrl(): string
+    {
+        return $this->pdfPreviewUrl;
+    }
+
+    public function epubPreviewUrl(): string
+    {
+        return $this->epubPreviewUrl;
+    }
+
+    public function mobiPreviewUrl(): string
+    {
+        return $this->mobiPreviewUrl;
     }
 }

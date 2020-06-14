@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_URI'] === '/title_page.jpg') {
 $bookSlug = $_ENV['LEANPUB_BOOK_SLUG'];
 
 if (!isset($_GET['api_key']) || $_GET['api_key'] !== $_ENV['LEANPUB_API_KEY']) {
-    header('Location: https://leanpub.com/authors', true, 302);
+    header('Content-Type: text/html');
+    echo file_get_contents('redirect.html');
+    header('Location: https://leanpub.com/login', true, 302);
     exit;
 }
 
