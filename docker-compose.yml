@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.2"
 
 services:
   php:
@@ -16,7 +16,6 @@ services:
     image: composer:latest
     volumes:
       - ./:/app
-      - "$HOME/.composer:/tmp"
     user: ${HOST_UID}:${HOST_GID}
 
   fake_leanpub_server:
