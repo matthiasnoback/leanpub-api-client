@@ -48,6 +48,14 @@ if (preg_match('#^/' . preg_quote($bookSlug) . '\.json$#', $pathInfo) > 0) {
     header('Content-Type: application/json');
     echo file_get_contents(__DIR__ . '/preview.json');
     exit;
+} elseif ($pathInfo === '/' . $bookSlug .  '/preview/subset.json'
+    && $_SERVER['REQUEST_METHOD'] === 'POST'
+    && isset($_SERVER['HTTP_CONTENT_TYPE']) && $_SERVER['HTTP_CONTENT_TYPE'] === 'application/x-www-form-urlencoded'
+) {
+    file_put_contents($previewStartedAtFile, time());
+    header('Content-Type: application/json');
+    echo file_get_contents(__DIR__ . '/preview.json');
+    exit;
 } elseif ($pathInfo === '/' . $bookSlug . '/job_status.json') {
     header('Content-Type: application/json');
 

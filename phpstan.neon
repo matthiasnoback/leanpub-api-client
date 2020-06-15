@@ -3,8 +3,6 @@ parameters:
   paths:
     - src/
     - integration-tests/
-#  excludes_analyse:
-#    - integration-tests
 includes:
   - vendor/phpstan/phpstan-beberlei-assert/extension.neon
   - vendor/phpstan/phpstan-phpunit/extension.neon

@@ -65,4 +65,33 @@ final class StartPreviewUsingLeanpubApi implements StartPreview
             throw CouldNotStartPreview::unknownReason();
         }
     }
+
+    public function startPreviewOfSubset(): void
+    {
+        $response = $this->httpClient->sendRequest(
+            $this->requestFactory->createRequest(
+                'POST',
+                sprintf(
+                    '%s/%s/preview/subset.json?api_key=%s',
+                    $this->baseUrl->asString(),
+                    $this->bookSlug->asString(),
+                    $this->apiKey->asString()
+                ),
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded'
+                ]
+            )
+        );
+        $responseBody = $response->getBody()->getContents();
+
+        try {
+            $responseData = json_decode($responseBody, true);
+        } catch (JsonException $exception) {
+            throw CouldNotStartPreview::invalidJsonResponse($responseBody);
+        }
+
+        if (!$responseData['success'] || $responseData['success'] !== true) {
+            throw CouldNotStartPreview::unknownReason();
+        }
+    }
 }

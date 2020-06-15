@@ -81,6 +81,17 @@ final class LeanpubApi implements
         ))->startPreview();
     }
 
+    public function startPreviewOfSubset(): void
+    {
+        (new StartPreviewUsingLeanpubApi(
+            $this->bookSlug,
+            $this->apiKey,
+            $this->baseUrl,
+            $this->httpClient,
+            $this->requestFactory
+        ))->startPreviewOfSubset();
+    }
+
     public function getJobStatus(): JobStatus
     {
         return (new GetJobStatusFromLeanpubApi(

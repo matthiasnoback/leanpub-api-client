@@ -18,16 +18,14 @@ final class LeanpubApplication extends Application
     {
         parent::__construct('Leanpub API client', 'UNKNOWN');
 
-        foreach (
-            [
-                'LEANPUB_API_KEY',
-                'LEANPUB_BOOK_SLUG',
-                'LEANPUB_BASE_URL'
-            ] as $environmentVariable
-        ) {
+        foreach (['LEANPUB_API_KEY', 'LEANPUB_BOOK_SLUG'] as $environmentVariable) {
             if (!isset($_ENV[$environmentVariable])) {
                 throw new RuntimeException('Undefined environment variable: ' . $environmentVariable);
             }
+        }
+
+        if (!isset($_ENV['LEANPUB_BASE_URL'])) {
+            $_ENV['LEANPUB_BASE_URL'] = 'https://leanpub.com';
         }
 
         $leanpubApi = new LeanpubApi(
