@@ -6,6 +6,7 @@ $projectRootDir = null;
 
 foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/../vendor/autoload.php', __DIR__ . '/vendor/autoload.php') as $autoloadFile) {
     if (file_exists($autoloadFile)) {
+        $autoloadFile = realpath($autoloadFile);
         $projectRootDir = dirname(dirname($autoloadFile));
         require $autoloadFile;
 

@@ -26,6 +26,7 @@ final class GeneratePreviewCommand extends Command
     protected function configure(): void
     {
         $this->setName('generate-preview')
+            ->setDescription('Generate a preview of the book')
             ->addOption(
                 'sleep',
                 null,
