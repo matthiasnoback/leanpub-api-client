@@ -16,6 +16,8 @@ use LeanpubApi\IndividualPurchases\IndividualPurchases;
 use LeanpubApi\JobStatus\GetJobStatus;
 use LeanpubApi\JobStatus\GetJobStatusFromLeanpubApi;
 use LeanpubApi\JobStatus\JobStatus;
+use LeanpubApi\Publish\Publish;
+use LeanpubApi\Publish\PublishUsingLeanpubApi;
 use LeanpubApi\StartPreview\StartPreview;
 use LeanpubApi\StartPreview\StartPreviewUsingLeanpubApi;
 use Psr\Http\Client\ClientInterface;
@@ -24,7 +26,8 @@ final class LeanpubApi implements
     IndividualPurchases,
     GetBookSummary,
     StartPreview,
-    GetJobStatus
+    GetJobStatus,
+    Publish
 {
     private ApiKey $apiKey;
 
@@ -101,5 +104,27 @@ final class LeanpubApi implements
             $this->httpClient,
             $this->requestFactory
         ))->getJobStatus();
+    }
+
+    public function publishNewVersion(): void
+    {
+        (new PublishUsingLeanpubApi(
+            $this->bookSlug,
+            $this->apiKey,
+            $this->baseUrl,
+            $this->httpClient,
+            $this->requestFactory
+        ))->publishNewVersion();
+    }
+
+    public function publishNewVersionAndEmailReaders(string $emailMessage): void
+    {
+        (new PublishUsingLeanpubApi(
+            $this->bookSlug,
+            $this->apiKey,
+            $this->baseUrl,
+            $this->httpClient,
+            $this->requestFactory
+        ))->publishNewVersionAndEmailReaders($emailMessage);
     }
 }
