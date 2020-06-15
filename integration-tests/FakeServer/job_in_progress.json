@@ -1,0 +1,14 @@
+{
+  "status": "working",
+  "update_time": "1592156105",
+  "jid": "ad72d44434e7645954387107",
+  "job_type": "GenerateBookJob#preview",
+  "options": "{\"slug\"=\u003e\"learning-php-for-the-web-without-a-framework\", \"action\"=\u003e\"preview\", \"email_readers\"=\u003efalse, \"requested_by\"=\u003e\"matthiasnoback@gmail.com\", \"provenance\"=\u003enil}",
+  "name": "Preview learning-php-for-the-web-without-a-framework",
+  "at": "5",
+  "total": "30",
+  "num": "5",
+  "hide_from_author": "false",
+  "start_time": "1592156105",
+  "message": "Getting changes..."
+}

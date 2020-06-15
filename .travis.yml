@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+  - travis_retry docker-compose pull
+
+script:
+  - make test
