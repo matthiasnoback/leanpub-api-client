@@ -5,7 +5,7 @@ namespace IntegrationTests;
 
 use Asynchronicity\PHPUnit\Asynchronicity;
 
-final class JobStatusTest extends IntegrationTestCase
+final class StartPreviewAndJobStatusTest extends IntegrationTestCase
 {
     use Asynchronicity;
 
