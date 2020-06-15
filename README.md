@@ -16,3 +16,9 @@ This means you can any HTTP client you like by installing its adapter.
 # Usage
 
 See the directory [integration-tests/](integration-tests/) to find out how to use this library.
+
+There's also a command-line application. To find out more about the available commands, run:
+
+```bash
+vendor/bin/leanpub.php
+```
