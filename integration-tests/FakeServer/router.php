@@ -19,8 +19,8 @@ $bookSlug = $_ENV['LEANPUB_BOOK_SLUG'];
 function validateApiKey(array $data): void {
     if (!isset($data['api_key']) || $data['api_key'] !== $_ENV['LEANPUB_API_KEY']) {
         header('Content-Type: text/html');
-        echo file_get_contents(__DIR__ . '/redirect.html');
         header('Location: https://leanpub.com/login', true, 302);
+        echo file_get_contents(__DIR__ . '/redirect.html');
         exit;
     }
 }
@@ -51,7 +51,7 @@ if (preg_match('#^/' . preg_quote($bookSlug) . '\.json$#', $pathInfo) > 0) {
     && $_SERVER['REQUEST_METHOD'] === 'POST'
     && isset($_SERVER['HTTP_CONTENT_TYPE']) && $_SERVER['HTTP_CONTENT_TYPE'] === 'application/x-www-form-urlencoded'
 ) {
-    validateApiKey($_GET);
+    validateApiKey($_POST);
     file_put_contents($jobStartedAtFile, time());
     header('Content-Type: application/json');
     echo file_get_contents(__DIR__ . '/preview.json');
@@ -60,7 +60,7 @@ if (preg_match('#^/' . preg_quote($bookSlug) . '\.json$#', $pathInfo) > 0) {
     && $_SERVER['REQUEST_METHOD'] === 'POST'
     && isset($_SERVER['HTTP_CONTENT_TYPE']) && $_SERVER['HTTP_CONTENT_TYPE'] === 'application/x-www-form-urlencoded'
 ) {
-    validateApiKey($_GET);
+    validateApiKey($_POST);
     file_put_contents($jobStartedAtFile, time());
     header('Content-Type: application/json');
     echo file_get_contents(__DIR__ . '/preview.json');

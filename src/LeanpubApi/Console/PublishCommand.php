@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace LeanpubApi\Console;
 
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,7 +37,7 @@ final class PublishCommand extends BaseCommand
         if (is_string($releaseNotesPath)) {
             $releaseNotes = file_get_contents($releaseNotesPath);
             if ($releaseNotes === false) {
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     'The provided release notes option does not point to an actual file: ' . $releaseNotesPath
                 );
             }

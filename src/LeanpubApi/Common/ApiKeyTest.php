@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace LeanpubApi\Common;
 
 use InvalidArgumentException;
-use LeanpubApi\Common\ApiKey;
 use PHPUnit\Framework\TestCase;
 
 final class ApiKeyTest extends TestCase

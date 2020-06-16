@@ -11,6 +11,7 @@ use Http\Discovery\MessageFactoryDiscovery;
 use LeanpubApi\Common\ApiKey;
 use LeanpubApi\Common\BaseUrl;
 use LeanpubApi\Common\BookSlug;
+use LeanpubApi\Common\LeanpubApiClient;
 use LeanpubApi\LeanpubApi;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -75,14 +76,16 @@ abstract class BaseCommand extends Command
         $loggerPlugin = new LoggerPlugin(new ConsoleLogger($output));
 
         return new LeanpubApi(
-            ApiKey::fromString((string)$_ENV['LEANPUB_API_KEY']),
-            BookSlug::fromString((string)$_ENV['LEANPUB_BOOK_SLUG']),
-            BaseUrl::fromString((string)$_ENV['LEANPUB_BASE_URL']),
-            new PluginClient(
-                HttpClientDiscovery::find(),
-                [$loggerPlugin]
-            ),
-            MessageFactoryDiscovery::find()
+            new LeanpubApiClient(
+                new PluginClient(
+                    HttpClientDiscovery::find(),
+                    [$loggerPlugin]
+                ),
+                MessageFactoryDiscovery::find(),
+                BaseUrl::fromString((string)$_ENV['LEANPUB_BASE_URL']),
+                ApiKey::fromString((string)$_ENV['LEANPUB_API_KEY']),
+                BookSlug::fromString((string)$_ENV['LEANPUB_BOOK_SLUG'])
+            )
         );
     }
 }
