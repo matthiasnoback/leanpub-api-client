@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace LeanpubApi\Common;
 
 use InvalidArgumentException;
-use LeanpubApi\Common\BaseUrl;
 use PHPUnit\Framework\TestCase;
 
 final class BaseUrlTest extends TestCase

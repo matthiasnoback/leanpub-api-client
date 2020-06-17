@@ -22,3 +22,6 @@ There's also a command-line application. To find out more about the available co
 ```bash
 vendor/bin/leanpub.php
 ```
+
+Run with `-vvv` to see the HTTP requests that the client makes to the Leanpub API.
+
