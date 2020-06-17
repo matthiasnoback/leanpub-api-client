@@ -19,8 +19,8 @@ final class PublishUsingLeanpubApi implements Publish
     {
         $decodedData = $this->leanpubApiClient->getJsonDecodedDataForRequest('POST', '/publish.json');
 
-        if (!isset($decodedData['success']) || $decodedData['success'] !== true) {
-            throw CouldNotPublishNewVersion::unknownReason();
+        if (!isset($decodedData['success'])) {
+            throw CouldNotPublishNewVersion::unknownReason($decodedData);
         }
     }
 
@@ -38,8 +38,8 @@ final class PublishUsingLeanpubApi implements Publish
             ]
         );
 
-        if (!isset($decodedData['success']) || $decodedData['success'] !== true) {
-            throw CouldNotPublishNewVersion::unknownReason();
+        if (!isset($decodedData['success'])) {
+            throw CouldNotPublishNewVersion::unknownReason($decodedData);
         }
     }
 }

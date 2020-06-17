@@ -41,12 +41,11 @@ final class PublishCommand extends BaseCommand
                     'The provided release notes option does not point to an actual file: ' . $releaseNotesPath
                 );
             }
-            dump($releaseNotes);
 
             $output->writeln('Publish new version and emailing readers...');
             $leanpubApi->publishNewVersionAndEmailReaders($releaseNotes);
         } else {
-            $output->writeln('Starting preview...');
+            $output->writeln('Publish new version...');
             $leanpubApi->publishNewVersion();
         }
 
