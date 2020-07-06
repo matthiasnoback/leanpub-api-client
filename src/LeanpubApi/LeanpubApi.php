@@ -8,6 +8,9 @@ use LeanpubApi\BookSummary\BookSummary;
 use LeanpubApi\BookSummary\GetBookSummary;
 use LeanpubApi\BookSummary\GetBookSummaryFromLeanpubApi;
 use LeanpubApi\Common\LeanpubApiClient;
+use LeanpubApi\Coupons\Coupons;
+use LeanpubApi\Coupons\CouponsUsingLeanpubApi;
+use LeanpubApi\Coupons\CreateCoupon;
 use LeanpubApi\IndividualPurchases\IndividualPurchaseFromLeanpubApi;
 use LeanpubApi\IndividualPurchases\IndividualPurchases;
 use LeanpubApi\JobStatus\GetJobStatus;
@@ -23,7 +26,8 @@ final class LeanpubApi implements
     GetBookSummary,
     StartPreview,
     GetJobStatus,
-    Publish
+    Publish,
+    Coupons
 {
     private LeanpubApiClient $leanpubApiClient;
 
@@ -65,5 +69,10 @@ final class LeanpubApi implements
     public function publishNewVersionAndEmailReaders(string $emailMessage): void
     {
         (new PublishUsingLeanpubApi($this->leanpubApiClient))->publishNewVersionAndEmailReaders($emailMessage);
+    }
+
+    public function createCoupon(CreateCoupon $createCoupon): void
+    {
+        (new CouponsUsingLeanpubApi($this->leanpubApiClient))->createCoupon($createCoupon);
     }
 }

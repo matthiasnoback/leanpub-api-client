@@ -16,7 +16,7 @@ final class GetBookSummaryFromLeanpubApi implements GetBookSummary
 
     public function getBookSummary(): BookSummary
     {
-        $decodedData = $this->leanpubApiClient->getJsonDecodedDataForRequest('GET', '.json');
+        $decodedData = $this->leanpubApiClient->getJsonData('.json');
 
         return BookSummary::fromJsonDecodedData($decodedData);
     }

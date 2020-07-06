@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use Assert\Assert;
+use function Safe\json_decode;
+
 require dirname(__DIR__) . '/bootstrap.php';
 
 error_reporting(E_ALL);
@@ -87,6 +90,24 @@ if (preg_match('#^/' . preg_quote($bookSlug) . '\.json$#', $pathInfo) > 0) {
         echo file_get_contents(__DIR__ . '/job_in_progress.json');
     }
 
+    exit;
+} elseif ($pathInfo === '/' . $bookSlug . '/coupons.json') {
+    validateApiKey($_GET);
+
+    header('Content-Type: application/json');
+
+    $requestBody = file_get_contents('php://input');
+    Assert::that($requestBody)->string();
+    $decodedData = json_decode($requestBody, true);
+    Assert::that($decodedData)->isArray();
+
+    if ($decodedData['coupon']['package_discounts_attributes'][0]['package_slug'] === 'unknown_package_slug') {
+        echo file_get_contents(__DIR__ . '/unknown_package_slug.json');
+    } elseif ($decodedData['coupon']['coupon_code'] === 'COUPON_CODE_USED_BEFORE') {
+        echo file_get_contents(__DIR__ . '/coupon_already_exists.json');
+    } else {
+        echo file_get_contents(__DIR__ . '/coupon_created.json');
+    }
     exit;
 }
 

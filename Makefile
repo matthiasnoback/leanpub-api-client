@@ -9,4 +9,4 @@ composer.lock: composer.json
 .PHONY: test
 test: composer.lock
 	docker/php vendor/bin/phpstan analyze
-	docker/php vendor/bin/phpunit -v
+	docker/php vendor/bin/phpunit -v --stop-on-failure

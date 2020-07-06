@@ -21,8 +21,7 @@ final class IndividualPurchaseFromLeanpubApi implements IndividualPurchases
         $page = 1;
 
         while (true) {
-            $decodedData = $this->leanpubApiClient->getJsonDecodedDataForRequest(
-                'GET',
+            $decodedData = $this->leanpubApiClient->getJsonData(
                 '/individual_purchases.json',
                 [
                     'page' => (string)$page

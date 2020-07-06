@@ -5,8 +5,10 @@ namespace LeanpubApi\Common;
 
 use Http\Message\RequestFactory;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 use Safe\Exceptions\JsonException;
 use function Safe\json_decode;
+use function Safe\json_encode;
 
 final class LeanpubApiClient
 {
@@ -35,36 +37,63 @@ final class LeanpubApiClient
     }
 
     /**
-     * @param array<string,string> $parameters
-     * @return array<mixed>
+     * @param array<string,mixed> $jsonData
+     * @return array<string,mixed>
      */
-    public function getJsonDecodedDataForRequest(string $method, string $uri, array $parameters = []): array
+    public function postJsonData(string $uri, array $jsonData): array
     {
-        $parameters['api_key'] = $this->apiKey->asString();
-
-        $uri = $this->baseUrl->asString() . '/' . $this->bookSlug->asString() . $uri;
-        if ($method === 'GET' && !empty($parameters)) {
-            $uri .= '?' . http_build_query($parameters);
-        }
-
-        $headers = [];
-        if ($method === 'POST') {
-            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        }
-
-        $body = null;
-        if ($method === 'POST' && !empty($parameters)) {
-            $body = http_build_query($parameters);
-        }
-
-        $response = $this->client->sendRequest(
-            $this->requestFactory->createRequest(
-                $method,
-                $uri,
-                $headers,
-                $body
-            )
+        $request = $this->requestFactory->createRequest(
+            'POST',
+            $this->buildUrl($uri),
+            [
+                'Content-Type' => 'application/json'
+            ],
+            json_encode($jsonData)
         );
+
+        return $this->sendRequestAndParseResponse($request);
+    }
+
+    /**
+     * @param array<string,mixed> $formData
+     * @return array<string,mixed>
+     */
+    public function postFormData(string $uri, array $formData): array
+    {
+        $formData['api_key'] = $this->apiKey->asString();
+
+        $request = $this->requestFactory->createRequest(
+            'POST',
+            $this->buildUrl($uri),
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ],
+            http_build_query($formData)
+        );
+
+        return $this->sendRequestAndParseResponse($request);
+    }
+
+    /**
+     * @param array<string,mixed> $queryParameters
+     * @return array<string,mixed>
+     */
+    public function getJsonData(string $uri, array $queryParameters = []): array
+    {
+        $request = $this->requestFactory->createRequest(
+            'GET',
+            $this->buildUrl($uri, $queryParameters)
+        );
+
+        return $this->sendRequestAndParseResponse($request);
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    private function sendRequestAndParseResponse(RequestInterface $request): array
+    {
+        $response = $this->client->sendRequest($request);
 
         if ($response->getStatusCode() === 302) {
             $locationHeaders = $response->getHeader('Location');
@@ -86,5 +115,18 @@ final class LeanpubApiClient
         }
 
         return $responseData;
+    }
+
+    /**
+     * @param array<string,mixed> $queryParameters
+     */
+    private function buildUrl(string $uri, array $queryParameters = []): string
+    {
+        $queryParameters['api_key'] = $this->apiKey->asString();
+
+        return $this->baseUrl->asString()
+            . '/' . $this->bookSlug->asString()
+            . $uri
+            . '?' . http_build_query($queryParameters);
     }
 }

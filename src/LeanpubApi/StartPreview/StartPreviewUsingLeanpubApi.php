@@ -16,7 +16,7 @@ final class StartPreviewUsingLeanpubApi implements StartPreview
 
     public function startPreview(): void
     {
-        $responseData = $this->leanpubApiClient->getJsonDecodedDataForRequest('POST', '/preview.json');
+        $responseData = $this->leanpubApiClient->postFormData('/preview.json', []);
 
         if (!isset($responseData['success']) || $responseData['success'] !== true) {
             throw CouldNotStartPreview::unknownReason();
@@ -25,7 +25,7 @@ final class StartPreviewUsingLeanpubApi implements StartPreview
 
     public function startPreviewOfSubset(): void
     {
-        $responseData = $this->leanpubApiClient->getJsonDecodedDataForRequest('POST', '/preview/subset.json');
+        $responseData = $this->leanpubApiClient->postFormData('/preview/subset.json', []);
 
         if (!isset($responseData['success']) || $responseData['success'] !== true) {
             throw CouldNotStartPreview::unknownReason();

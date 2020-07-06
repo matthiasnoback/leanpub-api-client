@@ -17,7 +17,7 @@ final class PublishUsingLeanpubApi implements Publish
 
     public function publishNewVersion(): void
     {
-        $decodedData = $this->leanpubApiClient->getJsonDecodedDataForRequest('POST', '/publish.json');
+        $decodedData = $this->leanpubApiClient->postFormData('/publish.json', []);
 
         if (!isset($decodedData['success'])) {
             throw CouldNotPublishNewVersion::unknownReason($decodedData);
@@ -29,8 +29,7 @@ final class PublishUsingLeanpubApi implements Publish
         Assert::that(trim($emailMessage))
             ->notEmpty('When emailing your readers the email message should not be empty');
 
-        $decodedData = $this->leanpubApiClient->getJsonDecodedDataForRequest(
-            'POST',
+        $decodedData = $this->leanpubApiClient->postFormData(
             '/publish.json',
             [
                 'publish[email_readers]' => 'true',

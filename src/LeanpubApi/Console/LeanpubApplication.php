@@ -14,7 +14,8 @@ final class LeanpubApplication extends Application
         $this->addCommands(
             [
                 new GeneratePreviewCommand(),
-                new PublishCommand()
+                new PublishCommand(),
+                new CreateCouponCommand()
             ]
         );
     }

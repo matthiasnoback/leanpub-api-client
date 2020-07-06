@@ -16,7 +16,7 @@ final class GetJobStatusFromLeanpubApi implements GetJobStatus
 
     public function getJobStatus(): JobStatus
     {
-        $responseData = $this->leanpubApiClient->getJsonDecodedDataForRequest('GET', '/job_status.json');
+        $responseData = $this->leanpubApiClient->getJsonData('/job_status.json');
 
         return JobStatus::fromJsonDecodedData($responseData);
     }
