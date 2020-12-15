@@ -1,7 +1,18 @@
 version: "3.2"
 
 services:
-  php:
+  php80:
+    image: php:8.0-cli-alpine
+    volumes:
+      - ./:/app
+    user: ${HOST_UID}:${HOST_GID}
+    working_dir: /app
+    depends_on:
+      - fake_leanpub_server
+    env_file:
+      - .env.test
+
+  php74:
     image: php:7.4-cli-alpine
     volumes:
       - ./:/app

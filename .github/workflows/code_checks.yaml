@@ -17,10 +17,10 @@ jobs:
                     -
                         name: Tests
                         run: vendor/bin/phpunit
-                php-versions: ['7.4', '8.0']
+                php-versions: ['74', '80']
 
         runs-on: ubuntu-latest
-        name: ${{ matrix.actions.name }}
+        name: ${{ matrix.actions.name }} (${{ matrix.php-versions }})
 
         steps:
             -   uses: actions/checkout@v2
@@ -30,6 +30,6 @@ jobs:
                     php-version: ${{ matrix.php-versions }}
                     coverage: none
 
-            -   run: composer install --no-progress --ansi
+            -   run: docker/composer install --no-progress --ansi --prefer-dist
 
-            -   run: ${{ matrix.actions.run }}
+            -   run: docker/php${{ matrix.php-versions }} ${{ matrix.actions.run }}
