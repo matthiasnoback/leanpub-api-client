@@ -1,7 +1,5 @@
 # Leanpub API client for PHP
 
-[![Build Status](https://travis-ci.org/matthiasnoback/leanpub-api-client.svg?branch=master)](https://travis-ci.org/matthiasnoback/leanpub-api-client)
-
 This library contains a PHP implementation of a client that can be used to connect to the [Leanpub
 API](https://leanpub.com/help/api). It is *not feature-complete*, but the features that are implemented are implemented
 fully and they work correctly. Feel free to submit PRs for adding new features or fields to existing DTOs, etc.
