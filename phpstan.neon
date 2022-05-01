@@ -1,8 +1,5 @@
 parameters:
-  level: max
+  level: 8
   paths:
     - src/
     - integration-tests/
-includes:
-  - vendor/phpstan/phpstan-beberlei-assert/extension.neon
-  - vendor/phpstan/phpstan-phpunit/extension.neon
