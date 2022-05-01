@@ -18,10 +18,8 @@ jobs:
                         name: Tests
                         run: vendor/bin/phpunit
 
-                php-versions: ['74', '80']
-
         runs-on: ubuntu-latest
-        name: ${{ matrix.actions.name }} (${{ matrix.php-versions }})
+        name: ${{ matrix.actions.name }}
 
         steps:
             -   uses: actions/checkout@v2
@@ -29,10 +27,10 @@ jobs:
             # see https://github.com/shivammathur/setup-php
             -   uses: shivammathur/setup-php@v2
                 with:
-                    php-version: ${{ matrix.php-versions }}
+                    php-version: 8.0
                     coverage: none
 
             -   uses: "ramsey/composer-install@v1"
 
             # docker image is needed, as it starts local server for testing requests
-            -   run: docker/php${{ matrix.php-versions }} ${{ matrix.actions.run }}
+            -   run: docker/php80 ${{ matrix.actions.run }}
