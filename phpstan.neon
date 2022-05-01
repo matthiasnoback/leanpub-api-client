@@ -1,5 +1,13 @@
 parameters:
-  level: 8
-  paths:
-    - src/
-    - integration-tests/
+    level: 8
+
+    paths:
+        - src
+        - integration-tests
+
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        # locally, phpstan skips assertions for some reason
+        - '#Method LeanpubApi\\(.*?)::dateTimeImmutableFromDateTimeString\(\) should return DateTimeImmutable but returns DateTimeImmutable\|false#'
+        - '#Parameter \#1 \$json of function Safe\\json_decode expects string, string\|false given#'
