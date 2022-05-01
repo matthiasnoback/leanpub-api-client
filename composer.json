@@ -10,18 +10,23 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
+<<<<<<< HEAD
         "beberlei/assert": "^3.3",
         "thecodingmachine/safe": "^1.1",
+=======
+        "ext-json": "*",
+        "beberlei/assert": "^3.3",
+        "thecodingmachine/safe": "^1.3",
+>>>>>>> bump php-http dependencies
         "psr/http-message": "^1.0",
         "php-http/client-implementation": "^1.0",
-        "php-http/httplug": "^2.0",
+        "php-http/httplug": "^2.3",
         "php-http/message-factory": "^1.0",
-        "php-http/discovery": "^1.0",
-        "ext-json": "*",
-        "php-http/message": "^1.8",
+        "php-http/discovery": "^1.14",
+        "php-http/message": "^1.13",
         "symfony/console": "^6.0",
         "symfony/dotenv": "^6.0",
-        "php-http/logger-plugin": "^1.1"
+        "php-http/logger-plugin": "^1.3"
     },
     "license": "MIT",
     "require-dev": {
