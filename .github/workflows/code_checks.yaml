@@ -34,4 +34,5 @@ jobs:
 
             -   uses: "ramsey/composer-install@v1"
 
-            -   run: ${{ matrix.actions.run }}
+            # docker image is needed, as it starts local server for testing requests
+            -   run: docker/php${{ matrix.php-versions }} ${{ matrix.actions.run }}
